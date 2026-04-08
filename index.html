@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Vijay Kakade</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -12,14 +12,14 @@
 body {
   margin:0;
   font-family: 'Inter', sans-serif;
-  color:#1e293b;
-  background: linear-gradient(to bottom right, #eef2ff, #f8fafc);
+  background:#f7f3ef;
+  color:#1c1c1c;
 }
 
 .container {
   max-width:1100px;
   margin:auto;
-  padding:40px 20px;
+  padding:50px 20px;
 }
 
 /* HEADER */
@@ -35,47 +35,66 @@ body {
   border-radius:50%;
   object-fit:cover;
   object-position:top;
-  border:3px solid #6366f1;
+  border:3px solid #c7a27c;
 }
 
 h1 {
-  margin:0;
+  font-family: 'Playfair Display', serif;
   font-size:42px;
-  font-weight:600;
+  margin:0;
 }
 
-/* ACCORDION CARD */
+p {
+  margin:6px 0;
+  color:#6b6b6b;
+}
+
+/* CARDS */
 .card {
-  background:#ffffffcc;
-  backdrop-filter: blur(10px);
-  padding:0;
-  margin-top:20px;
+  background:white;
+  margin-top:25px;
   border-radius:14px;
-  border:1px solid #e2e8f0;
+  border:1px solid #e5ded6;
   overflow:hidden;
 }
 
-/* HEADER CLICK */
 .card-header {
   padding:18px 22px;
   cursor:pointer;
-  font-weight:600;
+  font-weight:500;
   display:flex;
   justify-content:space-between;
-  align-items:center;
 }
 
 .card-header:hover {
-  background:#f1f5f9;
+  background:#faf7f4;
 }
 
 .card-content {
-  padding:20px 22px;
-  display:block; /* default open */
+  padding:22px;
+  display:block;
 }
 
 ul {
   padding-left:20px;
+  line-height:1.6;
+}
+
+/* FLOW SECTION */
+.flow {
+  display:flex;
+  justify-content:space-between;
+  text-align:center;
+  margin-top:15px;
+}
+
+.flow-step {
+  background:#fdfaf7;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #e5ded6;
+  width:18%;
+  font-size:13px;
 }
 
 /* SKILLS */
@@ -86,26 +105,26 @@ ul {
 }
 
 .skill {
-  background:#eef2ff;
+  background:#fdfaf7;
   padding:10px;
   border-radius:8px;
-  font-size:14px;
+  border:1px solid #e5ded6;
 }
 
 /* CHART */
 .chart-container {
-  background:#f8fafc;
   padding:20px;
-  border-radius:10px;
-  border:1px solid #e2e8f0;
-}
-
-.toggle-icon {
-  font-size:14px;
-  color:#6366f1;
 }
 
 </style>
+
+<script>
+function toggleSection(el) {
+  const content = el.nextElementSibling;
+  content.style.display = content.style.display === "none" ? "block" : "none";
+}
+</script>
+
 </head>
 
 <body>
@@ -117,75 +136,60 @@ ul {
   <img src="profile.JPG" class="profile-img">
   <div>
     <h1>Vijay Kakade</h1>
-    <p>📍 Mumbai, India</p>
-    <p>📞 +91 9594959515</p>
-    <p>📧 vkvijaykakade@gmail.com</p>
-    <p>🔗 linkedin.com/in/vijay-kakade-14a35b211</p>
+    <p>Mumbai, India</p>
+    <p>+91 9594959515</p>
+    <p>vkvijaykakade@gmail.com</p>
   </div>
 </div>
-
-<!-- ACCORDION FUNCTION -->
-<script>
-function toggleSection(el) {
-  const content = el.nextElementSibling;
-  content.style.display = content.style.display === "none" ? "block" : "none";
-}
-</script>
 
 <!-- PROFILE -->
 <div class="card">
-  <div class="card-header" onclick="toggleSection(this)">
-    Profile <span class="toggle-icon">▼</span>
-  </div>
+  <div class="card-header" onclick="toggleSection(this)">Profile ▼</div>
   <div class="card-content">
     Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
-    Experienced in translating systematic signals into implementation-ready portfolios, optimizing transaction costs and improving realized performance.
   </div>
 </div>
 
-<!-- EXPERIENCE -->
+<!-- 🔥 FLOW (NEW UX SECTION) -->
+<div class="card">
+  <div class="card-header">How I Work ▼</div>
+  <div class="card-content">
+    <div class="flow">
+      <div class="flow-step">Factor Research</div>
+      <div class="flow-step">Portfolio Construction</div>
+      <div class="flow-step">Execution Strategy</div>
+      <div class="flow-step">Trade Execution</div>
+      <div class="flow-step">Performance Analysis</div>
+    </div>
+  </div>
+</div>
+
+<!-- VERSOR -->
 <div class="card">
   <div class="card-header" onclick="toggleSection(this)">
-    Versor Investments (Nov 2023 – Present) <span class="toggle-icon">▼</span>
+    Versor Investments (Nov 2023 – Present) ▼
   </div>
   <div class="card-content">
     <ul>
-      <li>Led end-to-end equities portfolio management across construction, deployment, execution, and monitoring</li>
-      <li>Translated factor signals into execution-ready portfolios optimizing return, risk, and transaction costs</li>
-      <li>Executed equities and futures strategies including rollovers</li>
-      <li>Reduced slippage via transaction cost model improvements</li>
+      <li>Led end-to-end equities portfolio management across construction, deployment, execution, and performance monitoring</li>
+      <li>Specialized in futures trading, rollovers, and execution dynamics across equities and derivatives</li>
+      <li>Translated factor signals into execution-ready portfolios optimizing return, risk, and liquidity</li>
+      <li>Executed equities and futures strategies validating model-driven trades in live markets</li>
+      <li>Designed transaction cost models reducing slippage and market impact</li>
       <li>Performed performance attribution and model vs execution analysis</li>
-      <li>Ran backtests and portfolio optimization using Axioma</li>
+      <li>Conducted factor diagnostics and portfolio optimization</li>
+      <li>Ran and validated backtests using Axioma</li>
       <li>Built automated order amendment system for real-time execution</li>
-      <li>Developed dashboards using Python, SQL, and Metabase</li>
-    </ul>
-  </div>
-</div>
-
-<!-- PROJECTS -->
-<div class="card">
-  <div class="card-header" onclick="toggleSection(this)">
-    Execution Systems & Automation Impact <span class="toggle-icon">▼</span>
-  </div>
-  <div class="card-content">
-    <ul>
-      <li>Futures vs Forwards Enhancement</li>
-      <li>FTSE KLCI Data Fix</li>
-      <li>Automated Commentary Engine</li>
-      <li>Correlation Automation</li>
-      <li>Data Validation System</li>
-      <li>OAR Enhancement</li>
-      <li>DST Tracker</li>
-      <li>Opera Automation</li>
+      <li>Developed dashboards using Python, SQL, Metabase</li>
+      <li>Automated reporting pipeline saving 10+ hours monthly</li>
+      <li>Worked with Bloomberg Terminal, Refinitiv & FXALL</li>
     </ul>
   </div>
 </div>
 
 <!-- SKILLS -->
 <div class="card">
-  <div class="card-header" onclick="toggleSection(this)">
-    Core Skills <span class="toggle-icon">▼</span>
-  </div>
+  <div class="card-header" onclick="toggleSection(this)">Core Skills ▼</div>
   <div class="card-content">
     <div class="grid">
       <div class="skill">Portfolio Construction</div>
@@ -194,16 +198,16 @@ function toggleSection(el) {
       <div class="skill">Execution Strategy</div>
       <div class="skill">Market Microstructure</div>
       <div class="skill">Axioma Risk Models</div>
-      <div class="skill">Python</div>
-      <div class="skill">SQL</div>
+      <div class="skill">Python / SQL</div>
+      <div class="skill">Bloomberg / Refinitiv</div>
     </div>
   </div>
 </div>
 
-<!-- 🔥 WORK INTENSITY -->
+<!-- WORK INTENSITY -->
 <div class="card">
   <div class="card-header" onclick="toggleSection(this)">
-    Work Intensity (3-Year Estimate) <span class="toggle-icon">▼</span>
+    Work Intensity (3-Year Estimate) ▼
   </div>
   <div class="card-content">
     <div class="chart-container">
@@ -214,7 +218,6 @@ function toggleSection(el) {
 
 </div>
 
-<!-- CHART -->
 <script>
 
 let workingHoursPerDay = 14.5;
@@ -233,10 +236,7 @@ new Chart(document.getElementById('hoursChart'), {
         totalWorkingHours,
         totalAvailableHours - totalWorkingHours
       ],
-      backgroundColor: [
-        '#6366f1',
-        '#e2e8f0'
-      ]
+      backgroundColor: ['#c7a27c','#e5ded6']
     }]
   }
 });
