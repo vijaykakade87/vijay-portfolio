@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vijay Kakade</title>
 
 <style>
@@ -10,7 +9,7 @@ body {
   margin:0;
   font-family: 'Segoe UI', sans-serif;
   background:#0a0a0a;
-  color:#fff;
+  color:white;
 }
 
 .container {
@@ -19,127 +18,178 @@ body {
   padding:40px 20px;
 }
 
-h1 {
-  font-size:48px;
+.header {
+  display:flex;
+  align-items:center;
+  gap:20px;
 }
 
-h2 {
-  border-bottom:1px solid #333;
-  padding-bottom:5px;
+img {
+  width:120px;
+  border-radius:50%;
 }
+
+h1 { margin:0; }
 
 .card {
   background:#121212;
-  padding:25px;
-  border-radius:12px;
-  margin-top:25px;
-  box-shadow:0 0 20px rgba(255,255,255,0.05);
+  padding:20px;
+  margin-top:20px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover {
+  background:#1a1a1a;
+}
+
+.content {
+  display:none;
+  margin-top:10px;
+}
+
+.open .content {
+  display:block;
 }
 
 .grid {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:10px;
 }
 
 .skill {
-  background:#1c1c1c;
-  padding:10px;
+  background:#1f1f1f;
+  padding:8px;
   border-radius:6px;
 }
 
 .chart {
-  height:250px;
+  height:200px;
   background:linear-gradient(to top, #4f46e5, #0a0a0a);
   border-radius:10px;
-  animation: glow 3s infinite alternate;
 }
 
-@keyframes glow {
-  from {opacity:0.6;}
-  to {opacity:1;}
-}
-
-.highlight {
-  color:#8b5cf6;
-}
 </style>
+
+<script>
+function toggle(el){
+  el.classList.toggle("open");
+}
+</script>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>Vijay Kakade</h1>
-<p style="color:gray;">
-Quantitative Analyst | Portfolio Construction | Execution & Alpha Implementation
-</p>
-
-<div class="card">
-<h2>Profile</h2>
-<p>
-Quantitative Analyst specializing in <span class="highlight">portfolio construction, execution, and alpha implementation</span>. 
-Experienced in translating factor signals into real-world portfolios while optimizing transaction costs and improving realized returns.
-</p>
+<!-- HEADER -->
+<div class="header">
+  <img src="your-photo.jpg">
+  <div>
+    <h1>Vijay Kakade</h1>
+    <p style="color:gray;">
+      Mumbai | +91 9594959515 | vkvijaykakade@gmail.com
+    </p>
+  </div>
 </div>
 
-<div class="card">
-<h2>Experience</h2>
-
-<h3>Versor Investments</h3>
-<p style="color:gray;">Quantitative Analyst | Nov 2023 – Present</p>
-
-<ul>
-<li>Led end-to-end equities portfolio management across construction, execution, and monitoring</li>
-<li>Optimized execution strategies reducing transaction costs and slippage</li>
-<li>Developed automated order amendment system for real-time execution</li>
-<li>Performed factor diagnostics and portfolio optimization</li>
-<li>Built Python + SQL dashboards improving analytics and reporting efficiency</li>
-<li><b>Saved 10+ hours/month through automation</b></li>
-</ul>
-
+<!-- PROFILE -->
+<div class="card" onclick="toggle(this)">
+  <h2>Profile</h2>
+  <div class="content">
+    Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
+  </div>
 </div>
 
-<div class="card">
-<h2>Key Projects</h2>
-<ul>
-<li>Automated Equities Order Amender (live execution system)</li>
-<li>Transaction Cost Optimization Framework</li>
-<li>Portfolio Analytics Dashboard</li>
-<li>IoT-based Covid Detection System</li>
-</ul>
+<!-- EXPERIENCE -->
+<div class="card" onclick="toggle(this)">
+  <h2>Versor Investments</h2>
+  <div class="content">
+    <ul>
+      <li>End-to-end equities portfolio management</li>
+      <li>Execution + transaction cost optimization</li>
+      <li>Factor research and diagnostics</li>
+      <li>Automated order amendment system</li>
+      <li>Saved 10+ hours/month via automation</li>
+    </ul>
+  </div>
 </div>
 
-<div class="card">
-<h2>Portfolio Simulation</h2>
-<div class="chart"></div>
-<p style="color:gray;">Simulated PnL visualization (interactive upgrade possible)</p>
+<!-- TRANSINDIA -->
+<div class="card" onclick="toggle(this)">
+  <h2>Transindia Real Estate</h2>
+  <div class="content">
+    <ul>
+      <li>Financial modeling & analysis</li>
+      <li>IFRS & Ind AS reporting</li>
+      <li>Worked directly with CFO</li>
+    </ul>
+  </div>
 </div>
 
-<div class="card">
-<h2>Core Skills</h2>
-<div class="grid">
-<div class="skill">Portfolio Construction</div>
-<div class="skill">Quant Research</div>
-<div class="skill">Transaction Cost Analysis</div>
-<div class="skill">Performance Attribution</div>
-<div class="skill">Execution Strategy</div>
-<div class="skill">Market Microstructure</div>
-<div class="skill">Python, SQL, Metabase</div>
-<div class="skill">Axioma, Bloomberg</div>
-</div>
+<!-- INTERNSHIPS -->
+<div class="card" onclick="toggle(this)">
+  <h2>Internships</h2>
+  <div class="content">
+    <ul>
+      <li>FOREX trading exposure</li>
+      <li>Fundamental & technical analysis</li>
+      <li>Client portfolio management</li>
+    </ul>
+  </div>
 </div>
 
-<div class="card">
-<h2>Education</h2>
-<p><b>MBA Tech (Finance)</b> — NMIMS (2017–2023)</p>
-<p><b>BTech (EXTC)</b> — NMIMS (2017–2023)</p>
+<!-- PROJECTS -->
+<div class="card" onclick="toggle(this)">
+  <h2>Projects</h2>
+  <div class="content">
+    <ul>
+      <li>Automated Order Amender</li>
+      <li>Portfolio Analytics Dashboard</li>
+      <li>IoT Covid Detection System</li>
+    </ul>
+  </div>
 </div>
 
-<div class="card">
-<h2>Contact</h2>
-<p>Email: vkvijaykakade@gmail.com</p>
-<p>Phone: +91 9594959515</p>
+<!-- SKILLS -->
+<div class="card" onclick="toggle(this)">
+  <h2>Core Skills</h2>
+  <div class="content grid">
+    <div class="skill">Portfolio Construction</div>
+    <div class="skill">Quant Research</div>
+    <div class="skill">Execution Strategy</div>
+    <div class="skill">Python, SQL</div>
+    <div class="skill">Axioma</div>
+    <div class="skill">Bloomberg</div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<div class="card" onclick="toggle(this)">
+  <h2>Education</h2>
+  <div class="content">
+    MBA Tech & BTech — NMIMS  
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="card" onclick="toggle(this)">
+  <h2>Achievements</h2>
+  <div class="content">
+    Swimming medals, sports achievements  
+  </div>
+</div>
+
+<!-- PORTFOLIO SIM -->
+<div class="card" onclick="toggle(this)">
+  <h2>Portfolio Simulation</h2>
+  <div class="content">
+    <div class="chart"></div>
+    <p style="color:gray;">(Demo visualization)</p>
+  </div>
 </div>
 
 </div>
