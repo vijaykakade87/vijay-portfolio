@@ -1,111 +1,148 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijay Kakade</title>
 
-const data = [
-  { name: "Jan", pnl: 2 },
-  { name: "Feb", pnl: 4 },
-  { name: "Mar", pnl: 3 },
-  { name: "Apr", pnl: 6 },
-  { name: "May", pnl: 8 },
-];
-
-export default function Portfolio() {
-  return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <div className="max-w-6xl mx-auto space-y-10">
-
-        {/* HEADER */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-5xl font-bold">Vijay Kakade</h1>
-          <p className="text-gray-400 mt-2">
-            Quantitative Analyst | Portfolio Construction | Execution & Alpha Implementation
-          </p>
-        </motion.div>
-
-        {/* PROFILE */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-semibold mb-3">Profile</h2>
-            <p className="text-gray-300">
-              Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution. 
-              Specialized in translating factor signals into execution-ready portfolios while optimizing transaction costs 
-              and improving realized performance.
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* EXPERIENCE */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Experience</h2>
-            <h3 className="text-xl font-semibold">Versor Investments</h3>
-            <p className="text-gray-400 mb-3">Quantitative Analyst | Nov 2023 – Present</p>
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Led end-to-end equities portfolio management across construction, execution, and monitoring</li>
-              <li>Optimized execution strategies reducing transaction costs and slippage</li>
-              <li>Developed automated order amendment system for live execution efficiency</li>
-              <li>Performed factor diagnostics and portfolio optimization</li>
-              <li>Built Python + SQL dashboards improving analytics and reporting efficiency</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        {/* PROJECTS */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Key Projects</h2>
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Automated Equities Order Amender (real-time execution optimization)</li>
-              <li>Transaction Cost Optimization Framework</li>
-              <li>Portfolio Analytics Dashboard (Python + SQL + Metabase)</li>
-              <li>IoT-based Covid Detection System</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        {/* INTERACTIVE DASHBOARD */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Portfolio Simulation (Demo)</h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={data}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="pnl" stroke="#8884d8" />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* SKILLS */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Core Skills</h2>
-            <div className="grid grid-cols-2 gap-3 text-gray-300">
-              <p>Portfolio Construction</p>
-              <p>Quant Research</p>
-              <p>Transaction Cost Analysis</p>
-              <p>Performance Attribution</p>
-              <p>Execution Strategy</p>
-              <p>Market Microstructure</p>
-              <p>Python, SQL, Metabase</p>
-              <p>Axioma, Bloomberg</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* CONTACT */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-semibold mb-3">Contact</h2>
-            <p className="text-gray-300">Email: vkvijaykakade@gmail.com</p>
-            <p className="text-gray-300">Phone: +91 9594959515</p>
-          </CardContent>
-        </Card>
-
-      </div>
-    </div>
-  );
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:#0a0a0a;
+  color:#fff;
 }
+
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+h1 {
+  font-size:48px;
+}
+
+h2 {
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
+}
+
+.card {
+  background:#121212;
+  padding:25px;
+  border-radius:12px;
+  margin-top:25px;
+  box-shadow:0 0 20px rgba(255,255,255,0.05);
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.skill {
+  background:#1c1c1c;
+  padding:10px;
+  border-radius:6px;
+}
+
+.chart {
+  height:250px;
+  background:linear-gradient(to top, #4f46e5, #0a0a0a);
+  border-radius:10px;
+  animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+  from {opacity:0.6;}
+  to {opacity:1;}
+}
+
+.highlight {
+  color:#8b5cf6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Vijay Kakade</h1>
+<p style="color:gray;">
+Quantitative Analyst | Portfolio Construction | Execution & Alpha Implementation
+</p>
+
+<div class="card">
+<h2>Profile</h2>
+<p>
+Quantitative Analyst specializing in <span class="highlight">portfolio construction, execution, and alpha implementation</span>. 
+Experienced in translating factor signals into real-world portfolios while optimizing transaction costs and improving realized returns.
+</p>
+</div>
+
+<div class="card">
+<h2>Experience</h2>
+
+<h3>Versor Investments</h3>
+<p style="color:gray;">Quantitative Analyst | Nov 2023 – Present</p>
+
+<ul>
+<li>Led end-to-end equities portfolio management across construction, execution, and monitoring</li>
+<li>Optimized execution strategies reducing transaction costs and slippage</li>
+<li>Developed automated order amendment system for real-time execution</li>
+<li>Performed factor diagnostics and portfolio optimization</li>
+<li>Built Python + SQL dashboards improving analytics and reporting efficiency</li>
+<li><b>Saved 10+ hours/month through automation</b></li>
+</ul>
+
+</div>
+
+<div class="card">
+<h2>Key Projects</h2>
+<ul>
+<li>Automated Equities Order Amender (live execution system)</li>
+<li>Transaction Cost Optimization Framework</li>
+<li>Portfolio Analytics Dashboard</li>
+<li>IoT-based Covid Detection System</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Portfolio Simulation</h2>
+<div class="chart"></div>
+<p style="color:gray;">Simulated PnL visualization (interactive upgrade possible)</p>
+</div>
+
+<div class="card">
+<h2>Core Skills</h2>
+<div class="grid">
+<div class="skill">Portfolio Construction</div>
+<div class="skill">Quant Research</div>
+<div class="skill">Transaction Cost Analysis</div>
+<div class="skill">Performance Attribution</div>
+<div class="skill">Execution Strategy</div>
+<div class="skill">Market Microstructure</div>
+<div class="skill">Python, SQL, Metabase</div>
+<div class="skill">Axioma, Bloomberg</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Education</h2>
+<p><b>MBA Tech (Finance)</b> — NMIMS (2017–2023)</p>
+<p><b>BTech (EXTC)</b> — NMIMS (2017–2023)</p>
+</div>
+
+<div class="card">
+<h2>Contact</h2>
+<p>Email: vkvijaykakade@gmail.com</p>
+<p>Phone: +91 9594959515</p>
+</div>
+
+</div>
+
+</body>
+</html>
