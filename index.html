@@ -8,8 +8,11 @@
 body {
   margin:0;
   font-family: 'Segoe UI', sans-serif;
-  background:#0a0a0a;
   color:white;
+  background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)),
+              url('https://images.unsplash.com/photo-1559526324-593bc073d938');
+  background-size:cover;
+  background-attachment:fixed;
 }
 
 .container {
@@ -21,36 +24,30 @@ body {
 .header {
   display:flex;
   align-items:center;
-  gap:20px;
+  gap:25px;
 }
 
-img {
-  width:120px;
+.profile-img {
+  width:130px;
+  height:130px;
   border-radius:50%;
+  object-fit:cover;
+  border:3px solid #4f46e5;
 }
 
-h1 { margin:0; }
+h1 { margin:0; font-size:40px; }
 
 .card {
-  background:#121212;
+  background:rgba(20,20,20,0.9);
   padding:20px;
   margin-top:20px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:0.3s;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
 
-.card:hover {
-  background:#1a1a1a;
-}
-
-.content {
-  display:none;
-  margin-top:10px;
-}
-
-.open .content {
-  display:block;
+h2 {
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
 }
 
 .grid {
@@ -70,14 +67,7 @@ h1 { margin:0; }
   background:linear-gradient(to top, #4f46e5, #0a0a0a);
   border-radius:10px;
 }
-
 </style>
-
-<script>
-function toggle(el){
-  el.classList.toggle("open");
-}
-</script>
 
 </head>
 
@@ -87,109 +77,139 @@ function toggle(el){
 
 <!-- HEADER -->
 <div class="header">
-  <img src="your-photo.jpg">
+  <img src="profile.jpg" class="profile-img">
   <div>
     <h1>Vijay Kakade</h1>
-    <p style="color:gray;">
-      Mumbai | +91 9594959515 | vkvijaykakade@gmail.com
-    </p>
+    <p>📍 Mumbai, India</p>
+    <p>📞 +91 9594959515</p>
+    <p>📧 vkvijaykakade@gmail.com</p>
+    <p>🔗 linkedin.com/in/vijay-kakade-14a35b211</p>
   </div>
 </div>
 
 <!-- PROFILE -->
-<div class="card" onclick="toggle(this)">
-  <h2>Profile</h2>
-  <div class="content">
-    Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
-  </div>
+<div class="card">
+<h2>Profile</h2>
+<p>
+Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
+Experienced in translating systematic signals and investment views into implementation-ready portfolios,
+optimizing transaction costs and improving realized performance.
+</p>
 </div>
 
-<!-- EXPERIENCE -->
-<div class="card" onclick="toggle(this)">
-  <h2>Versor Investments</h2>
-  <div class="content">
-    <ul>
-      <li>End-to-end equities portfolio management</li>
-      <li>Execution + transaction cost optimization</li>
-      <li>Factor research and diagnostics</li>
-      <li>Automated order amendment system</li>
-      <li>Saved 10+ hours/month via automation</li>
-    </ul>
-  </div>
+<!-- VERSOR -->
+<div class="card">
+<h2>Versor Investments (Nov 2023 – Present)</h2>
+<ul>
+<li>End-to-end equities portfolio management</li>
+<li>Execution and transaction cost optimization</li>
+<li>Factor research and diagnostics</li>
+<li>Backtesting and portfolio optimization</li>
+<li>Automated order amendment system</li>
+<li>Python, SQL dashboards</li>
+<li>Saved 10+ hours monthly via automation</li>
+</ul>
 </div>
 
 <!-- TRANSINDIA -->
-<div class="card" onclick="toggle(this)">
-  <h2>Transindia Real Estate</h2>
-  <div class="content">
-    <ul>
-      <li>Financial modeling & analysis</li>
-      <li>IFRS & Ind AS reporting</li>
-      <li>Worked directly with CFO</li>
-    </ul>
-  </div>
+<div class="card">
+<h2>Transindia Real Estate (July 2023)</h2>
+<ul>
+<li>Financial modelling & analysis</li>
+<li>Ind AS & IFRS reporting</li>
+<li>Quarterly results & tax work</li>
+<li>M&A analysis</li>
+<li>Worked with CFO</li>
+</ul>
 </div>
 
 <!-- INTERNSHIPS -->
-<div class="card" onclick="toggle(this)">
-  <h2>Internships</h2>
-  <div class="content">
-    <ul>
-      <li>FOREX trading exposure</li>
-      <li>Fundamental & technical analysis</li>
-      <li>Client portfolio management</li>
-    </ul>
-  </div>
+<div class="card">
+<h2>Internships</h2>
+<ul>
+<li>FOREX trading and market exposure</li>
+<li>Fundamental & technical analysis</li>
+<li>Client portfolio management</li>
+<li>Central Railways engineering work</li>
+</ul>
 </div>
 
 <!-- PROJECTS -->
-<div class="card" onclick="toggle(this)">
-  <h2>Projects</h2>
-  <div class="content">
-    <ul>
-      <li>Automated Order Amender</li>
-      <li>Portfolio Analytics Dashboard</li>
-      <li>IoT Covid Detection System</li>
-    </ul>
-  </div>
+<div class="card">
+<h2>Projects</h2>
+<ul>
+<li>Automated Equities Order Amender</li>
+<li>Portfolio Analytics Dashboard</li>
+<li>IoT Covid Detection System</li>
+<li>Water level detector</li>
+<li>Mobile phone detector</li>
+<li>Heartbeat device</li>
+</ul>
 </div>
 
 <!-- SKILLS -->
-<div class="card" onclick="toggle(this)">
-  <h2>Core Skills</h2>
-  <div class="content grid">
-    <div class="skill">Portfolio Construction</div>
-    <div class="skill">Quant Research</div>
-    <div class="skill">Execution Strategy</div>
-    <div class="skill">Python, SQL</div>
-    <div class="skill">Axioma</div>
-    <div class="skill">Bloomberg</div>
-  </div>
+<div class="card">
+<h2>Core Skills</h2>
+<div class="grid">
+<div class="skill">Portfolio Construction</div>
+<div class="skill">Quant Research</div>
+<div class="skill">Transaction Cost Analysis</div>
+<div class="skill">Execution Strategy</div>
+<div class="skill">Axioma</div>
+<div class="skill">Bloomberg</div>
+<div class="skill">Python</div>
+<div class="skill">SQL</div>
+<div class="skill">Financial Modelling</div>
+<div class="skill">M&A</div>
+</div>
 </div>
 
 <!-- EDUCATION -->
-<div class="card" onclick="toggle(this)">
-  <h2>Education</h2>
-  <div class="content">
-    MBA Tech & BTech — NMIMS  
-  </div>
+<div class="card">
+<h2>Education</h2>
+<p><b>MBA Tech</b> – NMIMS (2017–2023)</p>
+<p><b>BTech EXTC</b> – NMIMS (2017–2023)</p>
+<p>XII – Mithibai College (62%)</p>
+<p>X – Swami Vivekanand School (82%)</p>
+</div>
+
+<!-- CERTIFICATIONS -->
+<div class="card">
+<h2>Certifications</h2>
+<ul>
+<li>Python</li>
+<li>Advanced SQL</li>
+<li>Financial Analysis</li>
+<li>VBA Modeling</li>
+<li>Project Management</li>
+<li>Strategic Planning</li>
+</ul>
 </div>
 
 <!-- ACHIEVEMENTS -->
-<div class="card" onclick="toggle(this)">
-  <h2>Achievements</h2>
-  <div class="content">
-    Swimming medals, sports achievements  
-  </div>
+<div class="card">
+<h2>Achievements</h2>
+<ul>
+<li>District level swimming runner-up</li>
+<li>Gold medalist swimming</li>
+<li>March past competition winner</li>
+</ul>
 </div>
 
-<!-- PORTFOLIO SIM -->
-<div class="card" onclick="toggle(this)">
-  <h2>Portfolio Simulation</h2>
-  <div class="content">
-    <div class="chart"></div>
-    <p style="color:gray;">(Demo visualization)</p>
-  </div>
+<!-- INTERESTS -->
+<div class="card">
+<h2>Interests</h2>
+<ul>
+<li>Football & Cricket</li>
+<li>Travelling & Hiking</li>
+</ul>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="card">
+<h2>Portfolio Simulation</h2>
+<div class="chart"></div>
+<p style="color:gray;">(Visual placeholder for performance)</p>
 </div>
 
 </div>
