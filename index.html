@@ -5,7 +5,6 @@
 <title>Vijay Kakade</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -13,11 +12,8 @@
 body {
   margin:0;
   font-family: 'Inter', sans-serif;
-  color:#e5e7eb;
-  background: linear-gradient(rgba(10,10,10,0.85), rgba(10,10,10,0.9)),
-              url('https://images.unsplash.com/photo-1559526324-593bc073d938');
-  background-size:cover;
-  background-attachment:fixed;
+  color:#111827;
+  background:#f5f7fb;
 }
 
 .container {
@@ -33,39 +29,47 @@ body {
   gap:30px;
 }
 
-/* FIXED IMAGE */
 .profile-img {
   width:180px;
   height:180px;
   border-radius:50%;
   object-fit:cover;
-  object-position:top; /* 🔥 FIXES FACE CROPPING */
-  border:2px solid #3b82f6;
+  object-position:top;
+  border:3px solid #2563eb;
 }
 
 h1 {
   margin:0;
   font-size:42px;
   font-weight:600;
-  color:white;
+}
+
+p {
+  margin:6px 0;
 }
 
 /* CARDS */
 .card {
-  background:rgba(15,15,15,0.85);
+  background:white;
   padding:22px;
   margin-top:22px;
   border-radius:12px;
-  border:1px solid rgba(255,255,255,0.05);
+  border:1px solid #e5e7eb;
 }
 
 h2 {
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid #e5e7eb;
   padding-bottom:6px;
-  font-weight:500;
+  font-weight:600;
+  color:#1f2937;
 }
 
-/* SKILLS GRID */
+/* LIST */
+ul {
+  padding-left:20px;
+}
+
+/* SKILLS */
 .grid {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -73,7 +77,7 @@ h2 {
 }
 
 .skill {
-  background:#1a1a1a;
+  background:#f1f5f9;
   padding:10px;
   border-radius:6px;
   font-size:14px;
@@ -81,9 +85,10 @@ h2 {
 
 /* CHART */
 .chart-container {
-  background:#0f172a;
+  background:#ffffff;
   padding:20px;
   border-radius:10px;
+  border:1px solid #e5e7eb;
 }
 
 </style>
@@ -145,18 +150,39 @@ Experienced in translating systematic signals into implementation-ready portfoli
 </ul>
 </div>
 
-<!-- 🔥 REAL INSIGHT SECTION -->
+<!-- TRANSINDIA -->
 <div class="card">
-<h2>Work Intensity (3-Year Estimate)</h2>
-
-<div class="chart-container">
-<canvas id="hoursChart"></canvas>
+<h2>Transindia Real Estate (July 2023)</h2>
+<ul>
+<li>Preparation of quarterly results and financial statements</li>
+<li>Direct & indirect tax, P&L preparation</li>
+<li>Ind AS & IFRS implementation</li>
+<li>Financial modelling and analysis</li>
+<li>M&A and investment analysis</li>
+<li>Worked directly with CFO at management level</li>
+</ul>
 </div>
 
-<p style="margin-top:10px; font-size:14px; color:#9ca3af;">
-Estimated working hours vs available hours (excluding weekends)
-</p>
+<!-- INTERNSHIPS -->
+<div class="card">
+<h2>Internships</h2>
+<ul>
+<li>FOREX trading and real-time market exposure</li>
+<li>Fundamental and technical analysis</li>
+<li>Client portfolio management and profit optimization</li>
+<li>Central Railways engineering and telecom systems exposure</li>
+</ul>
+</div>
 
+<!-- ACADEMIC PROJECTS -->
+<div class="card">
+<h2>Academic Projects</h2>
+<ul>
+<li>IoT-based Covid Detection System</li>
+<li>Heartbeat & temperature measurement device</li>
+<li>Mobile phone signal detector</li>
+<li>Water level detection system</li>
+</ul>
 </div>
 
 <!-- SKILLS -->
@@ -178,16 +204,69 @@ Estimated working hours vs available hours (excluding weekends)
 </div>
 </div>
 
+<!-- EDUCATION -->
+<div class="card">
+<h2>Education</h2>
+<p><b>MBA Tech (Finance)</b> – NMIMS (2017–2023)</p>
+<p><b>BTech (EXTC)</b> – NMIMS (2017–2023)</p>
+<p>XII – Mithibai College (62%)</p>
+<p>X – Swami Vivekanand School (82%)</p>
+</div>
+
+<!-- CERTIFICATIONS -->
+<div class="card">
+<h2>Certifications</h2>
+<ul>
+<li>Python, Advanced SQL</li>
+<li>Financial Statement Analysis</li>
+<li>VBA Modelling</li>
+<li>Project Management</li>
+<li>Strategic Planning</li>
+<li>Excel & Business Analytics</li>
+</ul>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="card">
+<h2>Achievements</h2>
+<ul>
+<li>District level swimming runner-up</li>
+<li>Inter-school swimming gold medalist</li>
+<li>March past competition winner</li>
+</ul>
+</div>
+
+<!-- INTERESTS -->
+<div class="card">
+<h2>Interests</h2>
+<ul>
+<li>Football & Cricket</li>
+<li>Travelling & Hiking</li>
+</ul>
+</div>
+
+<!-- 🔥 FINAL SECTION -->
+<div class="card">
+<h2>Work Intensity (3-Year Estimate)</h2>
+
+<div class="chart-container">
+<canvas id="hoursChart"></canvas>
+</div>
+
+<p style="margin-top:10px; font-size:14px; color:#6b7280;">
+Estimated working hours vs available hours (excluding weekends)
+</p>
+
+</div>
+
 </div>
 
 <!-- CHART SCRIPT -->
 <script>
 
-// Assumptions
 let workingHoursPerDay = 14.5;
 let totalHoursPerDay = 24;
-
-let workingDays = 5 * 52 * 3; // 3 years excluding weekends
+let workingDays = 5 * 52 * 3;
 
 let totalWorkingHours = workingHoursPerDay * workingDays;
 let totalAvailableHours = totalHoursPerDay * workingDays;
@@ -200,13 +279,18 @@ new Chart(document.getElementById('hoursChart'), {
       data: [
         totalWorkingHours,
         totalAvailableHours - totalWorkingHours
-      ]
+      ],
+      backgroundColor: [
+        '#2563eb',
+        '#e5e7eb'
+      ],
+      borderWidth: 0
     }]
   },
   options: {
     plugins: {
       legend: {
-        labels: { color: '#e5e7eb' }
+        labels: { color: '#374151' }
       }
     }
   }
