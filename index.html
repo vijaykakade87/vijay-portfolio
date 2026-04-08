@@ -11,7 +11,7 @@
 
 body {
   margin:0;
-  font-family: 'Inter', sans-serif;
+  font-family:'Inter', sans-serif;
   background:#f7f3ef;
   color:#1c1c1c;
 }
@@ -39,7 +39,7 @@ body {
 }
 
 h1 {
-  font-family: 'Playfair Display', serif;
+  font-family:'Playfair Display', serif;
   font-size:42px;
   margin:0;
 }
@@ -80,7 +80,7 @@ ul {
   line-height:1.6;
 }
 
-/* FLOW SECTION */
+/* FLOW */
 .flow {
   display:flex;
   justify-content:space-between;
@@ -144,82 +144,188 @@ function toggleSection(el) {
 
 <!-- PROFILE -->
 <div class="card">
-  <div class="card-header" onclick="toggleSection(this)">Profile ▼</div>
-  <div class="card-content">
-    Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
-  </div>
+<div class="card-header" onclick="toggleSection(this)">Profile ▼</div>
+<div class="card-content">
+Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
+</div>
 </div>
 
-<!-- 🔥 FLOW (NEW UX SECTION) -->
+<!-- FLOW -->
 <div class="card">
-  <div class="card-header">How I Work ▼</div>
-  <div class="card-content">
-    <div class="flow">
-      <div class="flow-step">Factor Research</div>
-      <div class="flow-step">Portfolio Construction</div>
-      <div class="flow-step">Execution Strategy</div>
-      <div class="flow-step">Trade Execution</div>
-      <div class="flow-step">Performance Analysis</div>
-    </div>
-  </div>
+<div class="card-header">How I Work ▼</div>
+<div class="card-content">
+<div class="flow">
+<div class="flow-step">Factor Research</div>
+<div class="flow-step">Portfolio Construction</div>
+<div class="flow-step">Execution Strategy</div>
+<div class="flow-step">Execution</div>
+<div class="flow-step">Performance Analysis</div>
+</div>
+</div>
 </div>
 
 <!-- VERSOR -->
 <div class="card">
-  <div class="card-header" onclick="toggleSection(this)">
-    Versor Investments (Nov 2023 – Present) ▼
-  </div>
-  <div class="card-content">
-    <ul>
-      <li>Led end-to-end equities portfolio management across construction, deployment, execution, and performance monitoring</li>
-      <li>Specialized in futures trading, rollovers, and execution dynamics across equities and derivatives</li>
-      <li>Translated factor signals into execution-ready portfolios optimizing return, risk, and liquidity</li>
-      <li>Executed equities and futures strategies validating model-driven trades in live markets</li>
-      <li>Designed transaction cost models reducing slippage and market impact</li>
-      <li>Performed performance attribution and model vs execution analysis</li>
-      <li>Conducted factor diagnostics and portfolio optimization</li>
-      <li>Ran and validated backtests using Axioma</li>
-      <li>Built automated order amendment system for real-time execution</li>
-      <li>Developed dashboards using Python, SQL, Metabase</li>
-      <li>Automated reporting pipeline saving 10+ hours monthly</li>
-      <li>Worked with Bloomberg Terminal, Refinitiv & FXALL</li>
-    </ul>
-  </div>
+<div class="card-header" onclick="toggleSection(this)">Versor Investments ▼</div>
+<div class="card-content">
+<ul>
+<li>Led end-to-end equities portfolio management across construction, deployment, execution, and monitoring</li>
+<li>Specialized in futures trading and execution dynamics</li>
+<li>Translated factor signals into execution-ready portfolios</li>
+<li>Executed equities and futures strategies including rollovers</li>
+<li>Designed transaction cost models reducing slippage</li>
+<li>Performed performance attribution and model vs execution analysis</li>
+<li>Conducted factor diagnostics and portfolio optimization</li>
+<li>Ran backtests using Axioma</li>
+<li>Developed automated order amendment system</li>
+<li>Built dashboards using Python, SQL, Metabase</li>
+<li>Automated reporting saving 10+ hours monthly</li>
+<li>Worked with Bloomberg, Refinitiv & FXALL</li>
+</ul>
+</div>
+</div>
+
+<!-- PROJECTS -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Execution Systems & Automation Impact ▼</div>
+<div class="card-content">
+<ul>
+<li>Futures vs Forwards Enhancement</li>
+<li>FTSE KLCI Fix</li>
+<li>Automated Commentary Engine</li>
+<li>Correlation Automation</li>
+<li>Data Validation System</li>
+<li>OAR Enhancement</li>
+<li>DST Tracker</li>
+<li>Opera Automation</li>
+</ul>
+</div>
+</div>
+
+<!-- TRANSINDIA -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Transindia Real Estate ▼</div>
+<div class="card-content">
+<ul>
+<li>Preparation of quarterly results</li>
+<li>Direct & indirect tax, P&L</li>
+<li>Ind AS & IFRS</li>
+<li>Financial modelling</li>
+<li>M&A analysis</li>
+<li>Worked with CFO</li>
+</ul>
+</div>
+</div>
+
+<!-- INTERNSHIPS -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Internships ▼</div>
+<div class="card-content">
+<ul>
+<li>FOREX trading & real-time exposure</li>
+<li>Fundamental & technical analysis</li>
+<li>Portfolio management</li>
+<li>Railways engineering exposure</li>
+</ul>
+</div>
+</div>
+
+<!-- PROJECTS -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Academic Projects ▼</div>
+<div class="card-content">
+<ul>
+<li>IoT Covid Detection System</li>
+<li>Heartbeat device</li>
+<li>Mobile detector</li>
+<li>Water level system</li>
+</ul>
+</div>
 </div>
 
 <!-- SKILLS -->
 <div class="card">
-  <div class="card-header" onclick="toggleSection(this)">Core Skills ▼</div>
-  <div class="card-content">
-    <div class="grid">
-      <div class="skill">Portfolio Construction</div>
-      <div class="skill">Quantitative Research</div>
-      <div class="skill">Transaction Cost Analysis</div>
-      <div class="skill">Execution Strategy</div>
-      <div class="skill">Market Microstructure</div>
-      <div class="skill">Axioma Risk Models</div>
-      <div class="skill">Python / SQL</div>
-      <div class="skill">Bloomberg / Refinitiv</div>
-    </div>
-  </div>
+<div class="card-header" onclick="toggleSection(this)">Core Skills ▼</div>
+<div class="card-content">
+<div class="grid">
+<div class="skill">Portfolio Construction</div>
+<div class="skill">Quantitative Research</div>
+<div class="skill">Transaction Cost Analysis</div>
+<div class="skill">Execution Strategy</div>
+<div class="skill">Market Microstructure</div>
+<div class="skill">Axioma Risk Models</div>
+<div class="skill">Bloomberg</div>
+<div class="skill">Python</div>
+<div class="skill">SQL</div>
+<div class="skill">Financial Modelling</div>
+<div class="skill">Valuation</div>
+<div class="skill">M&A</div>
+</div>
+</div>
+</div>
+
+<!-- EDUCATION -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Education ▼</div>
+<div class="card-content">
+<p>MBA Tech (Finance) – NMIMS</p>
+<p>BTech (EXTC) – NMIMS</p>
+<p>XII – Mithibai College</p>
+<p>X – Swami Vivekanand School</p>
+</div>
+</div>
+
+<!-- CERTIFICATIONS -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Certifications ▼</div>
+<div class="card-content">
+<ul>
+<li>Python, Advanced SQL</li>
+<li>Financial Statement Analysis</li>
+<li>VBA Modelling</li>
+<li>Project Management</li>
+<li>Strategic Planning</li>
+<li>Excel & Business Analytics</li>
+</ul>
+</div>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Achievements ▼</div>
+<div class="card-content">
+<ul>
+<li>District swimming runner-up</li>
+<li>Inter-school gold medalist</li>
+<li>March past winner</li>
+</ul>
+</div>
+</div>
+
+<!-- INTERESTS -->
+<div class="card">
+<div class="card-header" onclick="toggleSection(this)">Interests ▼</div>
+<div class="card-content">
+<ul>
+<li>Football & Cricket</li>
+<li>Hiking</li>
+</ul>
+</div>
 </div>
 
 <!-- WORK INTENSITY -->
 <div class="card">
-  <div class="card-header" onclick="toggleSection(this)">
-    Work Intensity (3-Year Estimate) ▼
-  </div>
-  <div class="card-content">
-    <div class="chart-container">
-      <canvas id="hoursChart"></canvas>
-    </div>
-  </div>
+<div class="card-header" onclick="toggleSection(this)">Work Intensity ▼</div>
+<div class="card-content">
+<div class="chart-container">
+<canvas id="hoursChart"></canvas>
+</div>
+</div>
 </div>
 
 </div>
 
 <script>
-
 let workingHoursPerDay = 14.5;
 let totalHoursPerDay = 24;
 let workingDays = 5 * 52 * 3;
@@ -230,17 +336,13 @@ let totalAvailableHours = totalHoursPerDay * workingDays;
 new Chart(document.getElementById('hoursChart'), {
   type: 'doughnut',
   data: {
-    labels: ['Work', 'Remaining'],
+    labels: ['Work','Remaining'],
     datasets: [{
-      data: [
-        totalWorkingHours,
-        totalAvailableHours - totalWorkingHours
-      ],
-      backgroundColor: ['#c7a27c','#e5ded6']
+      data:[totalWorkingHours, totalAvailableHours-totalWorkingHours],
+      backgroundColor:['#c7a27c','#e5ded6']
     }]
   }
 });
-
 </script>
 
 </body>
