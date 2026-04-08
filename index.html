@@ -4,12 +4,17 @@
 <meta charset="UTF-8">
 <title>Vijay Kakade</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
+
 body {
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  color:white;
-  background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)),
+  font-family: 'Inter', sans-serif;
+  color:#e5e7eb;
+  background: linear-gradient(rgba(10,10,10,0.85), rgba(10,10,10,0.9)),
               url('https://images.unsplash.com/photo-1559526324-593bc073d938');
   background-size:cover;
   background-attachment:fixed;
@@ -21,55 +26,67 @@ body {
   padding:40px 20px;
 }
 
+/* HEADER */
 .header {
   display:flex;
   align-items:center;
-  gap:25px;
+  gap:30px;
 }
 
+/* FIXED IMAGE */
 .profile-img {
   width:180px;
   height:180px;
   border-radius:50%;
   object-fit:cover;
-  border:4px solid #4f46e5;
-  box-shadow:0 0 25px rgba(79,70,229,0.6);
+  object-position:top; /* 🔥 FIXES FACE CROPPING */
+  border:2px solid #3b82f6;
 }
 
-h1 { margin:0; font-size:42px; }
+h1 {
+  margin:0;
+  font-size:42px;
+  font-weight:600;
+  color:white;
+}
 
+/* CARDS */
 .card {
-  background:rgba(20,20,20,0.9);
+  background:rgba(15,15,15,0.85);
   padding:22px;
   margin-top:22px;
   border-radius:12px;
-  box-shadow:0 0 20px rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.05);
 }
 
 h2 {
-  border-bottom:1px solid #333;
+  border-bottom:1px solid rgba(255,255,255,0.08);
   padding-bottom:6px;
+  font-weight:500;
 }
 
+/* SKILLS GRID */
 .grid {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:12px;
 }
 
 .skill {
-  background:#1f1f1f;
-  padding:8px;
+  background:#1a1a1a;
+  padding:10px;
   border-radius:6px;
+  font-size:14px;
 }
 
-.chart {
-  height:220px;
-  background:linear-gradient(to top, #4f46e5, #0a0a0a);
+/* CHART */
+.chart-container {
+  background:#0f172a;
+  padding:20px;
   border-radius:10px;
 }
-</style>
 
+</style>
 </head>
 
 <body>
@@ -93,12 +110,11 @@ h2 {
 <h2>Profile</h2>
 <p>
 Quantitative Analyst operating at the intersection of equity research, portfolio construction, and execution.
-Experienced in translating systematic signals into implementation-ready portfolios,
-optimizing transaction costs and improving realized performance.
+Experienced in translating systematic signals into implementation-ready portfolios, optimizing transaction costs and improving realized performance.
 </p>
 </div>
 
-<!-- VERSOR -->
+<!-- EXPERIENCE -->
 <div class="card">
 <h2>Versor Investments (Nov 2023 – Present)</h2>
 <ul>
@@ -118,59 +134,29 @@ optimizing transaction costs and improving realized performance.
 <div class="card">
 <h2>Execution Systems & Automation Impact</h2>
 <ul>
-
-<li><b>Futures vs Forwards Reporting Enhancement:</b> Integrated Open Algo and Macro strategy; resolved Trend TC error in FX improving reporting accuracy</li>
-
-<li><b>FTSE KLCI EOD Data Reconciliation:</b> Identified and corrected discrepancies in benchmark reporting data ensuring analytics integrity</li>
-
-<li><b>Automated Commentary Generation System:</b> Built system to generate portfolio commentary reducing manual effort and improving consistency</li>
-
-<li><b>Correlation Analytics Automation:</b> Developed automated Excel-based correlation framework for portfolio and factor analysis</li>
-
-<li><b>KMD & Index Data Validation Framework:</b> Designed automated sanity-check system ensuring reliability of key datasets</li>
-
-<li><b>Order Analytics Report (OAR) Enhancement:</b> Improved tracking and certification of execution orders for portfolio management team</li>
-
-<li><b>Global DST Tracking System:</b> Built automated tracker eliminating errors in market timing across regions</li>
-
-<li><b>Opera Reporting Automation:</b> Automated Opera reports reducing recurring manual workload</li>
-
+<li><b>Futures vs Forwards Enhancement:</b> Integrated macro strategy & fixed FX TC error</li>
+<li><b>FTSE KLCI Fix:</b> Resolved benchmark discrepancies</li>
+<li><b>Automated Commentary Engine:</b> Reduced manual work significantly</li>
+<li><b>Correlation Automation:</b> Built Excel analytics framework</li>
+<li><b>Data Validation System:</b> Ensured reliability across datasets</li>
+<li><b>OAR Enhancement:</b> Improved execution tracking</li>
+<li><b>DST Tracker:</b> Eliminated global timing errors</li>
+<li><b>Opera Automation:</b> Reduced recurring workload</li>
 </ul>
 </div>
 
-<!-- TRANSINDIA -->
+<!-- 🔥 REAL INSIGHT SECTION -->
 <div class="card">
-<h2>Transindia Real Estate (July 2023)</h2>
-<ul>
-<li>Preparation of quarterly results and financial statements</li>
-<li>Direct & indirect tax, P&L preparation</li>
-<li>Ind AS & IFRS implementation</li>
-<li>Financial modelling and analysis</li>
-<li>M&A and investment analysis</li>
-<li>Worked directly with CFO at management level</li>
-</ul>
+<h2>Work Intensity (3-Year Estimate)</h2>
+
+<div class="chart-container">
+<canvas id="hoursChart"></canvas>
 </div>
 
-<!-- INTERNSHIPS -->
-<div class="card">
-<h2>Internships</h2>
-<ul>
-<li>FOREX trading and real-time market exposure</li>
-<li>Fundamental and technical analysis</li>
-<li>Client portfolio management and profit optimization</li>
-<li>Central Railways engineering and telecom systems exposure</li>
-</ul>
-</div>
+<p style="margin-top:10px; font-size:14px; color:#9ca3af;">
+Estimated working hours vs available hours (excluding weekends)
+</p>
 
-<!-- PROJECTS (ACADEMIC) -->
-<div class="card">
-<h2>Academic Projects</h2>
-<ul>
-<li>IoT-based Covid Detection System</li>
-<li>Heartbeat & temperature measurement device</li>
-<li>Mobile phone signal detector</li>
-<li>Water level detection system</li>
-</ul>
 </div>
 
 <!-- SKILLS -->
@@ -192,55 +178,41 @@ optimizing transaction costs and improving realized performance.
 </div>
 </div>
 
-<!-- EDUCATION -->
-<div class="card">
-<h2>Education</h2>
-<p><b>MBA Tech (Finance)</b> – NMIMS (2017–2023)</p>
-<p><b>BTech (EXTC)</b> – NMIMS (2017–2023)</p>
-<p>XII – Mithibai College (62%)</p>
-<p>X – Swami Vivekanand School (82%)</p>
 </div>
 
-<!-- CERTIFICATIONS -->
-<div class="card">
-<h2>Certifications</h2>
-<ul>
-<li>Python, Advanced SQL</li>
-<li>Financial Statement Analysis</li>
-<li>VBA Modelling</li>
-<li>Project Management</li>
-<li>Strategic Planning</li>
-<li>Excel & Business Analytics</li>
-</ul>
-</div>
+<!-- CHART SCRIPT -->
+<script>
 
-<!-- ACHIEVEMENTS -->
-<div class="card">
-<h2>Achievements</h2>
-<ul>
-<li>District level swimming runner-up</li>
-<li>Inter-school swimming gold medalist</li>
-<li>March past competition winner</li>
-</ul>
-</div>
+// Assumptions
+let workingHoursPerDay = 14.5;
+let totalHoursPerDay = 24;
 
-<!-- INTERESTS -->
-<div class="card">
-<h2>Interests</h2>
-<ul>
-<li>Football & Cricket</li>
-<li>Travelling & Hiking</li>
-</ul>
-</div>
+let workingDays = 5 * 52 * 3; // 3 years excluding weekends
 
-<!-- PORTFOLIO -->
-<div class="card">
-<h2>Portfolio Simulation</h2>
-<div class="chart"></div>
-<p style="color:gray;">(Visual placeholder for portfolio performance)</p>
-</div>
+let totalWorkingHours = workingHoursPerDay * workingDays;
+let totalAvailableHours = totalHoursPerDay * workingDays;
 
-</div>
+new Chart(document.getElementById('hoursChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Work Hours', 'Remaining Hours'],
+    datasets: [{
+      data: [
+        totalWorkingHours,
+        totalAvailableHours - totalWorkingHours
+      ]
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        labels: { color: '#e5e7eb' }
+      }
+    }
+  }
+});
+
+</script>
 
 </body>
 </html>
