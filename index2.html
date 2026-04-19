@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijay Kakade — Quantitative Analyst</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+  --bg: #04060a;
+  --surface: #090d14;
+  --panel: #0d1320;
+  --border: #1a2438;
+  --border-glow: #1e3a5f;
+  --gold: #d4a853;
+  --gold-dim: #8a6a2e;
+  --cyan: #00d4ff;
+  --cyan-dim: #006680;
+  --green: #00ff88;
+  --green-dim: #00663a;
+  --red: #ff4466;
+  --text: #e8edf5;
+  --text-muted: #5a6a82;
+  --text-dim: #8a9ab5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* NOISE TEXTURE */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* SCANLINES */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.05) 2px,
+    rgba(0,0,0,0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* TICKER BAR */
+.ticker-wrap {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ticker-track {
+  display: flex;
+  animation: ticker 35s linear infinite;
+  white-space: nowrap;
+  gap: 0;
+}
+
+.ticker-item {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 0 28px;
+  color: var(--text-dim);
+  border-right: 1px solid var(--border);
+}
+
+.ticker-item .sym { color: var(--cyan); font-weight: 700; }
+.ticker-item .up { color: var(--green); }
+.ticker-item .down { color: var(--red); }
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* GRID LAYOUT */
+.terminal {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* HEADER */
+.hero {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 240px;
+  height: 1px;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+.avatar-wrap {
+  position: relative;
+}
+
+.avatar-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--cyan), var(--gold), var(--cyan));
+  animation: spin 6s linear infinite;
+  z-index: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.avatar-inner {
+  position: relative;
+  z-index: 1;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--bg);
+}
+
+.avatar-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: grayscale(20%) contrast(1.05);
+}
+
+.hero-info {}
+
+.hero-tag {
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+  color: var(--cyan);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 58px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.hero-name span {
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.meta-line {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-line .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* SECTION LABELS */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.card:hover {
+  border-color: var(--border-glow);
+}
+
+.card-head {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  user-select: none;
+}
+
+.card-head:hover {
+  background: #111927;
+}
+
+.card-head-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-head-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--cyan);
+  opacity: 0.6;
+}
+
+.card-head-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+.chevron {
+  font-size: 11px;
+  color: var(--text-muted);
+  transition: transform 0.3s;
+  font-family: 'Space Mono', monospace;
+}
+
+.chevron.open { transform: rotate(180deg); }
+
+.card-body {
+  padding: 24px 20px;
+  display: none;
+}
+
+.card-body.open { display: block; }
+
+/* BULLET LIST */
+.qlist {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qlist li {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  padding-left: 18px;
+  position: relative;
+}
+
+.qlist li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+/* ALPHA PIPELINE FLOW */
+.flow-section {
+  margin: 48px 0;
+}
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  padding: 32px 24px;
+  position: relative;
+}
+
+.pipeline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cyan-dim), var(--gold-dim), var(--cyan-dim));
+  z-index: 0;
+}
+
+.pipe-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.pipe-node {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 18px;
+  border: 2px solid;
+  background: var(--bg);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.pipe-step:hover .pipe-node {
+  transform: scale(1.12);
+}
+
+.pipe-step:nth-child(1) .pipe-node { border-color: var(--cyan); box-shadow: 0 0 18px rgba(0,212,255,0.2); }
+.pipe-step:nth-child(2) .pipe-node { border-color: #5d8ff7; box-shadow: 0 0 18px rgba(93,143,247,0.2); }
+.pipe-step:nth-child(3) .pipe-node { border-color: var(--gold); box-shadow: 0 0 18px rgba(212,168,83,0.2); }
+.pipe-step:nth-child(4) .pipe-node { border-color: #c47df0; box-shadow: 0 0 18px rgba(196,125,240,0.2); }
+.pipe-step:nth-child(5) .pipe-node { border-color: var(--green); box-shadow: 0 0 18px rgba(0,255,136,0.2); }
+.pipe-step:nth-child(6) .pipe-node { border-color: #ff9f43; box-shadow: 0 0 18px rgba(255,159,67,0.2); }
+.pipe-step:nth-child(7) .pipe-node { border-color: var(--red); box-shadow: 0 0 18px rgba(255,68,102,0.2); }
+.pipe-step:nth-child(8) .pipe-node { border-color: var(--gold); box-shadow: 0 0 18px rgba(212,168,83,0.3); color: var(--gold); }
+
+.pipe-step:hover .pipe-node { transform: scale(1.15); }
+
+.pipe-step:nth-child(1):hover .pipe-node { box-shadow: 0 0 32px rgba(0,212,255,0.5); }
+.pipe-step:nth-child(2):hover .pipe-node { box-shadow: 0 0 32px rgba(93,143,247,0.5); }
+.pipe-step:nth-child(3):hover .pipe-node { box-shadow: 0 0 32px rgba(212,168,83,0.5); }
+.pipe-step:nth-child(4):hover .pipe-node { box-shadow: 0 0 32px rgba(196,125,240,0.5); }
+.pipe-step:nth-child(5):hover .pipe-node { box-shadow: 0 0 32px rgba(0,255,136,0.5); }
+.pipe-step:nth-child(6):hover .pipe-node { box-shadow: 0 0 32px rgba(255,159,67,0.5); }
+.pipe-step:nth-child(7):hover .pipe-node { box-shadow: 0 0 32px rgba(255,68,102,0.5); }
+.pipe-step:nth-child(8):hover .pipe-node { box-shadow: 0 0 40px rgba(212,168,83,0.6); }
+
+.pipe-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-align: center;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  max-width: 80px;
+}
+
+.pipe-num {
+  font-size: 8px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* EXPANDED PIPELINE DETAIL */
+.pipeline-detail {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 1px;
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+.pd-cell {
+  background: var(--surface);
+  padding: 16px;
+}
+
+.pd-step {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.pd-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* SKILLS GRID */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+
+.skill-cell {
+  background: var(--surface);
+  padding: 14px 16px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  transition: all 0.2s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-cell::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--border);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.skill-cell:hover {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.skill-cell:hover::before {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+/* STAT BAR */
+.stat-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.stat-label .name { color: var(--text-dim); }
+.stat-label .val { color: var(--gold); font-family: 'Space Mono', monospace; }
+
+.stat-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--cyan-dim), var(--cyan));
+  transform-origin: left;
+  animation: fillbar 1.4s ease forwards;
+  transform: scaleX(0);
+}
+
+@keyframes fillbar { to { transform: scaleX(1); } }
+
+/* TWO COL */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* PROJECT TAGS */
+.tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 5px 12px;
+  border: 1px solid var(--border-glow);
+  border-radius: 2px;
+  font-size: 10.5px;
+  color: var(--cyan);
+  background: rgba(0,212,255,0.04);
+  font-family: 'Space Mono', monospace;
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.tag:hover {
+  background: rgba(0,212,255,0.12);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0,212,255,0.15);
+}
+
+/* EDUCATION */
+.edu-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.edu-row:last-child { border-bottom: none; }
+
+.edu-index {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  padding-top: 2px;
+}
+
+.edu-name {
+  font-size: 13px;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+}
+
+.edu-sub {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.edu-badge {
+  font-size: 9px;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 2px;
+  font-family: 'Space Mono', monospace;
+  white-space: nowrap;
+}
+
+/* CHART */
+.chart-wrap {
+  position: relative;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-center-label {
+  position: absolute;
+  text-align: center;
+  pointer-events: none;
+}
+
+.chart-center-pct {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.chart-center-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'Space Mono', monospace;
+}
+
+/* ACHIEVEMENTS */
+.ach-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ach-row:last-child { border-bottom: none; }
+
+.ach-icon {
+  font-size: 18px;
+  width: 32px;
+  text-align: center;
+}
+
+.ach-text {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* MAIN GRID */
+.main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+/* BOTTOM GRID */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* PROFILE CARD */
+.profile-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 1px;
+}
+
+.pstat {
+  background: var(--panel);
+  padding: 14px;
+  text-align: center;
+}
+
+.pstat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.pstat-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: 'Space Mono', monospace;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+
+.footer-contact {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.footer-link:hover { text-shadow: 0 0 10px var(--cyan); }
+
+/* FADE IN */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeup 0.6s ease forwards;
+}
+
+@keyframes fadeup {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in:nth-child(1) { animation-delay: 0.05s; }
+.fade-in:nth-child(2) { animation-delay: 0.12s; }
+.fade-in:nth-child(3) { animation-delay: 0.19s; }
+.fade-in:nth-child(4) { animation-delay: 0.26s; }
+.fade-in:nth-child(5) { animation-delay: 0.33s; }
+.fade-in:nth-child(6) { animation-delay: 0.40s; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: auto 1fr; }
+  .hero-meta { display: none; }
+  .hero-name { font-size: 36px; }
+  .pipeline { grid-template-columns: repeat(4, 1fr); }
+  .pipeline::before { display: none; }
+  .pipeline-detail { grid-template-columns: 1fr 1fr; }
+  .main-grid { grid-template-columns: 1fr; }
+  .bottom-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<div class="terminal">
+
+  <!-- HERO -->
+  <div class="hero fade-in">
+    <div class="avatar-wrap">
+      <div class="avatar-inner">
+        <img src="profile.JPG" alt="Vijay Kakade" onerror="this.style.background='#0d1320';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.innerHTML='<span style=font-size:48px>V</span>'">
+      </div>
+    </div>
+
+    <div class="hero-info">
+      <div class="hero-tag">// QUANTITATIVE ANALYST · EQUITY</div>
+      <h1 class="hero-name">Vijay <span>Kakade</span></h1>
+      <div class="hero-sub">Portfolio Construction · Systematic Execution · Factor Research</div>
+    </div>
+
+    <div class="hero-meta">
+      <div class="meta-line"><span class="dot"></span> Mumbai, India</div>
+      <div class="meta-line">+91 95949 59515</div>
+      <div class="meta-line">vkvijaykakade@gmail.com</div>
+      <div class="meta-line" style="margin-top:8px; color: var(--gold);">EMN · MACRO · MANAGED FUTURES</div>
+    </div>
+  </div>
+
+  <!-- PIPELINE SECTION -->
+  <div class="flow-section fade-in">
+    <div class="section-label">00 — Alpha Generation Pipeline</div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:3px; overflow:hidden;">
+      <div style="padding:16px 24px 0; border-bottom:1px solid var(--border);">
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--cyan); letter-spacing:3px; padding-bottom:16px;">QUANT EQUITY RESEARCH → EXECUTION LOOP</div>
+      </div>
+
+      <div class="pipeline" style="border:none; border-radius:0;">
+        <div class="pipe-step">
+          <div class="pipe-node">🌐</div>
+          <div class="pipe-num">01</div>
+          <div class="pipe-label">Universe Definition & Data Sourcing</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">🔬</div>
+          <div class="pipe-num">02</div>
+          <div class="pipe-label">Factor Research & Signal Development</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">📊</div>
+          <div class="pipe-num">03</div>
+          <div class="pipe-label">Alpha Signal Testing & IC Analysis</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">🧩</div>
+          <div class="pipe-num">04</div>
+          <div class="pipe-label">Risk Modelling & Factor Diagnostics</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">⚙️</div>
+          <div class="pipe-num">05</div>
+          <div class="pipe-label">Portfolio Optimisation & Construction</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">🎯</div>
+          <div class="pipe-num">06</div>
+          <div class="pipe-label">Execution Strategy & Algo Selection</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">📡</div>
+          <div class="pipe-num">07</div>
+          <div class="pipe-label">Live Execution & Order Management</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-node">📈</div>
+          <div class="pipe-num">08</div>
+          <div class="pipe-label">Performance Attribution & Recalibration</div>
+        </div>
+      </div>
+
+      <div class="pipeline-detail">
+        <div class="pd-cell">
+          <div class="pd-step">01 → 02 · Research</div>
+          <div class="pd-desc">Bloomberg, Refinitiv data ingestion. Factor hypothesis generation across value, momentum, quality, low-vol dimensions.</div>
+        </div>
+        <div class="pd-cell">
+          <div class="pd-step">03 → 04 · Validation</div>
+          <div class="pd-desc">IC/IR analysis, backtests, Axioma risk model diagnostics. Turnover, factor exposure, and correlation checks.</div>
+        </div>
+        <div class="pd-cell">
+          <div class="pd-step">05 → 06 · Construction</div>
+          <div class="pd-desc">Mean-variance optimisation with constraints. TCA-driven algo selection — VWAP, IS, adaptive limit order logic.</div>
+        </div>
+        <div class="pd-cell">
+          <div class="pd-step">07 → 08 · Feedback</div>
+          <div class="pd-desc">Live OMS, slippage monitoring, model-vs-execution gap analysis. IC decay tracking to trigger recalibration.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT COL -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+
+      <!-- PROFILE CARD -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">01</span>
+            <span class="card-head-title">Profile</span>
+          </div>
+          <span class="chevron open">▲</span>
+        </div>
+        <div class="card-body open">
+          <div class="profile-stat-grid">
+            <div class="pstat">
+              <div class="pstat-val">3+</div>
+              <div class="pstat-label">YRS EXPERIENCE</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-val">100+</div>
+              <div class="pstat-label">FUTURES CONTRACTS</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-val">30h</div>
+              <div class="pstat-label">SAVED / MONTH</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-val">EMN</div>
+              <div class="pstat-label">PRIMARY STRATEGY</div>
+            </div>
+          </div>
+          <div style="padding:16px 0 4px; font-size:12.5px; line-height:1.8; color:var(--text-dim);">
+            Quantitative Analyst operating at the intersection of equity research, portfolio construction, and systematic execution. Specialized in Equity Market Neutral, Global Macro, and Managed Futures strategies with deep expertise in factor diagnostics, transaction cost analysis, and execution automation.
+          </div>
+        </div>
+      </div>
+
+      <!-- VERSOR -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">02</span>
+            <span class="card-head-title">Versor Investments</span>
+          </div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="qlist">
+            <li>Led end-to-end equities portfolio management across construction, deployment, execution, and performance monitoring for Equity Market Neutral strategies</li>
+            <li>Specialized in Global Macro and Managed Futures, executing 100+ futures, forwards, and interest rate swap contracts with deep derivatives expertise</li>
+            <li>Conducted factor diagnostics and portfolio optimization, improving signal robustness and implementation feasibility</li>
+            <li>Reduced transaction costs and slippage by optimizing execution strategies and refining algorithm selection and allocation</li>
+            <li>Performed performance attribution and model-vs-execution analysis, presenting actionable insights to the Investment Committee</li>
+            <li>Developed automated order amendment system dynamically adjusting limit prices based on real-time market conditions</li>
+            <li>Built scalable data pipelines, dashboards, and reporting systems using Python, SQL, and Metabase</li>
+            <li>Redesigned investor reporting pipeline — automated monthly marketing material generation, reducing manual effort by 30+ hours</li>
+            <li>Translated factor signals into execution-ready portfolios, optimizing trade-offs between return, risk, liquidity, and transaction costs</li>
+            <li>Ran and validated backtests across systematic strategies using Axioma risk model diagnostics</li>
+            <li>Worked across Bloomberg Terminal, Refinitiv, FXALL, and multiple electronic trading platforms</li>
+            <li>Leveraged AI-assisted code generation to reduce time from idea to deployment, focusing on structure validation and logic review</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EXECUTION PROJECTS -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">03</span>
+            <span class="card-head-title">Execution Systems & Automation</span>
+          </div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="tag-grid">
+            <div class="tag">Futures vs Forwards Enhancement</div>
+            <div class="tag">FTSE KLCI Fix</div>
+            <div class="tag">Automated Commentary Engine</div>
+            <div class="tag">Correlation Automation</div>
+            <div class="tag">Data Validation System</div>
+            <div class="tag">OAR Enhancement</div>
+            <div class="tag">DST Tracker</div>
+            <div class="tag">Opera Automation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRANSINDIA -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">04</span>
+            <span class="card-head-title">Transindia Real Estate</span>
+          </div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="two-col">
+            <ul class="qlist">
+              <li>Quarterly results preparation</li>
+              <li>Direct & indirect tax, P&amp;L analysis</li>
+              <li>Ind AS &amp; IFRS compliance</li>
+            </ul>
+            <ul class="qlist">
+              <li>Financial modelling</li>
+              <li>M&amp;A analysis</li>
+              <li>Worked directly with CFO</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COL -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+
+      <!-- SKILLS -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">05</span>
+            <span class="card-head-title">Core Skills</span>
+          </div>
+          <span class="chevron open">▲</span>
+        </div>
+        <div class="card-body open" style="padding:0;">
+          <div class="skills-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="skill-cell">Portfolio Construction</div>
+            <div class="skill-cell">Quant Research</div>
+            <div class="skill-cell">TCA</div>
+            <div class="skill-cell">Execution Strategy</div>
+            <div class="skill-cell">Market Microstructure</div>
+            <div class="skill-cell">Axioma</div>
+            <div class="skill-cell">Bloomberg</div>
+            <div class="skill-cell">Python</div>
+            <div class="skill-cell">SQL</div>
+            <div class="skill-cell">Financial Modelling</div>
+            <div class="skill-cell">Valuation</div>
+            <div class="skill-cell">M&amp;A</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFICIENCY -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">06</span>
+            <span class="card-head-title">Tool Proficiency</span>
+          </div>
+          <span class="chevron open">▲</span>
+        </div>
+        <div class="card-body open">
+          <div class="stat-bar-row">
+            <div class="stat-item">
+              <div class="stat-label"><span class="name">Python</span><span class="val">●●●●●</span></div>
+              <div class="stat-track"><div class="stat-fill" style="width:90%"></div></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label"><span class="name">SQL / Metabase</span><span class="val">●●●●○</span></div>
+              <div class="stat-track"><div class="stat-fill" style="width:80%; animation-delay:0.1s"></div></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label"><span class="name">Bloomberg / Refinitiv</span><span class="val">●●●●●</span></div>
+              <div class="stat-track"><div class="stat-fill" style="width:92%; animation-delay:0.2s"></div></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label"><span class="name">Axioma Risk</span><span class="val">●●●●○</span></div>
+              <div class="stat-track"><div class="stat-fill" style="width:78%; animation-delay:0.3s"></div></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label"><span class="name">Excel / VBA</span><span class="val">●●●●●</span></div>
+              <div class="stat-track"><div class="stat-fill" style="width:88%; animation-delay:0.4s"></div></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label"><span class="name">FXALL / OMS</span><span class="val">●●●●○</span></div>
+              <div class="stat-track"><div class="stat-fill" style="width:75%; animation-delay:0.5s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORK INTENSITY -->
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">07</span>
+            <span class="card-head-title">Work Intensity</span>
+          </div>
+          <span class="chevron open">▲</span>
+        </div>
+        <div class="card-body open">
+          <div class="chart-wrap">
+            <canvas id="hoursChart" width="180" height="180" style="max-width:180px;"></canvas>
+            <div class="chart-center-label">
+              <div class="chart-center-pct">70%</div>
+              <div class="chart-center-sub">OF WAKING HRS</div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:center; gap:20px; margin-top:12px;">
+            <div style="display:flex; align-items:center; gap:6px; font-size:10px; color:var(--text-muted);">
+              <span style="width:10px;height:10px;border-radius:2px;background:var(--gold);display:inline-block;"></span> Work
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:10px; color:var(--text-muted);">
+              <span style="width:10px;height:10px;border-radius:2px;background:var(--border);display:inline-block;"></span> Rest
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-grid">
+
+    <!-- EDUCATION -->
+    <div class="card fade-in">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="card-head-left">
+          <span class="card-head-id">08</span>
+          <span class="card-head-title">Education</span>
+        </div>
+        <span class="chevron open">▲</span>
+      </div>
+      <div class="card-body open">
+        <div class="edu-row">
+          <div class="edu-index">01</div>
+          <div>
+            <div class="edu-name">MBA Tech (Finance)</div>
+            <div class="edu-sub">NMIMS University</div>
+          </div>
+          <div class="edu-badge">PG</div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-index">02</div>
+          <div>
+            <div class="edu-name">BTech (EXTC)</div>
+            <div class="edu-sub">NMIMS University</div>
+          </div>
+          <div class="edu-badge">UG</div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-index">03</div>
+          <div>
+            <div class="edu-name">XII Science</div>
+            <div class="edu-sub">Mithibai College</div>
+          </div>
+          <div class="edu-badge">HS</div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-index">04</div>
+          <div>
+            <div class="edu-name">X</div>
+            <div class="edu-sub">Swami Vivekanand School</div>
+          </div>
+          <div class="edu-badge">SEC</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATIONS -->
+    <div class="card fade-in">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="card-head-left">
+          <span class="card-head-id">09</span>
+          <span class="card-head-title">Certifications</span>
+        </div>
+        <span class="chevron open">▲</span>
+      </div>
+      <div class="card-body open">
+        <div class="tag-grid" style="gap:6px;">
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">Python</div>
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">Advanced SQL</div>
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">FSA</div>
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">VBA Modelling</div>
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">Project Mgmt</div>
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">Strategic Planning</div>
+          <div class="tag" style="color:var(--gold); border-color:var(--gold-dim); background:rgba(212,168,83,0.04);">Excel & Analytics</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACHIEVEMENTS & INTERESTS -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">10</span>
+            <span class="card-head-title">Achievements</span>
+          </div>
+          <span class="chevron open">▲</span>
+        </div>
+        <div class="card-body open" style="padding-top:8px; padding-bottom:8px;">
+          <div class="ach-row">
+            <div class="ach-icon">🥈</div>
+            <div class="ach-text">District Swimming Runner-Up</div>
+          </div>
+          <div class="ach-row">
+            <div class="ach-icon">🥇</div>
+            <div class="ach-text">Inter-School Gold Medalist</div>
+          </div>
+          <div class="ach-row">
+            <div class="ach-icon">🏆</div>
+            <div class="ach-text">March Past Winner</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-head" onclick="toggle(this)">
+          <div class="card-head-left">
+            <span class="card-head-id">11</span>
+            <span class="card-head-title">Interests</span>
+          </div>
+          <span class="chevron open">▲</span>
+        </div>
+        <div class="card-body open" style="padding-top:8px; padding-bottom:8px;">
+          <div class="ach-row">
+            <div class="ach-icon">⚽</div>
+            <div class="ach-text">Football & Cricket</div>
+          </div>
+          <div class="ach-row">
+            <div class="ach-icon">🏔️</div>
+            <div class="ach-text">Hiking</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-id">VK · QUANT ANALYST · MUMBAI · 2025</div>
+    <div class="footer-contact">
+      <a class="footer-link" href="tel:+919594959515">+91 95949 59515</a>
+      <a class="footer-link" href="mailto:vkvijaykakade@gmail.com">vkvijaykakade@gmail.com</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// TICKER DATA
+const tickers = [
+  { sym: 'NIFTY', price: '24,385.40', chg: '+0.42%', up: true },
+  { sym: 'SENSEX', price: '80,218.37', chg: '+0.38%', up: true },
+  { sym: 'ES1', price: '5,832.50', chg: '-0.12%', up: false },
+  { sym: 'NQ1', price: '21,042.25', chg: '+0.27%', up: true },
+  { sym: 'EURUSD', price: '1.0876', chg: '-0.08%', up: false },
+  { sym: 'USDINR', price: '83.42', chg: '+0.03%', up: true },
+  { sym: 'VIX', price: '14.82', chg: '-3.21%', up: false },
+  { sym: 'GBPUSD', price: '1.2743', chg: '+0.11%', up: true },
+  { sym: 'GOLD', price: '2,631.40', chg: '+0.56%', up: true },
+  { sym: 'CL1', price: '71.18', chg: '-0.89%', up: false },
+  { sym: 'SPY', price: '583.14', chg: '+0.19%', up: true },
+  { sym: 'MSCI-EM', price: '1,082.37', chg: '-0.23%', up: false },
+];
+
+const track = document.getElementById('ticker');
+const html = tickers.map(t =>
+  `<div class="ticker-item"><span class="sym">${t.sym}</span> ${t.price} <span class="${t.up ? 'up' : 'down'}">${t.chg}</span></div>`
+).join('');
+track.innerHTML = html + html; // duplicate for seamless loop
+
+// TOGGLE
+function toggle(el) {
+  const body = el.nextElementSibling;
+  const chevron = el.querySelector('.chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+  chevron.textContent = isOpen ? '▼' : '▲';
+}
+
+// CHART
+const wh = 11.2, days = 5 * 52 * 3;
+const work = wh * days;
+const rest = 16 * days - work; // waking hours = 16hr/day
+
+new Chart(document.getElementById('hoursChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Work', 'Remaining'],
+    datasets: [{
+      data: [work, rest],
+      backgroundColor: ['#d4a853', '#1a2438'],
+      borderColor: ['#d4a853', '#1a2438'],
+      borderWidth: 2,
+      hoverBackgroundColor: ['#e8c070', '#1e2d48'],
+    }]
+  },
+  options: {
+    cutout: '72%',
+    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+    animation: { animateRotate: true, duration: 1500 }
+  }
+});
+</script>
+</body>
+</html>
